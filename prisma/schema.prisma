@@ -12,6 +12,16 @@ datasource db {
   provider = "postgresql"
 }
 
+model Session {
+  sessionId String   @id
+  userId    String
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
 model User {
   id           String   @id @default(uuid())
   email        String   @unique
@@ -20,6 +30,8 @@ model User {
   updatedAt    DateTime @updatedAt
 
   family Family?
+
+  session Session[]
 }
 
 model Family {

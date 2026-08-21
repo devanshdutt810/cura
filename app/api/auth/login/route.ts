@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { validateLoginSchema } from "../../../validation/auth-validation";
 import prisma from "@/lib/prisma";
 import { compare } from "bcrypt";
+import { startUserSession } from "@/lib/session";
 
 export async function POST(req: Request) {
   try {
@@ -30,7 +31,7 @@ export async function POST(req: Request) {
       throw new Error("Incorrect Password");
     }
 
-    return NextResponse.json(
+    const res = NextResponse.json(
       {
         message: "Login Successful",
       },
@@ -38,6 +39,10 @@ export async function POST(req: Request) {
         status: 200,
       },
     );
+
+    const Response = await startUserSession(res, user.id);
+
+    return Response;
   } catch (e) {
     return NextResponse.json(
       {
