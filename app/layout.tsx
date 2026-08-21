@@ -21,7 +21,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={`${notoSans} ${notoSans} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
-        <div className="h-screen bg-[#F8FAFC] text-black">{children}</div>
+        <div className="h-screen bg-[#F8FAFC] text-slate-700">{children}</div>
       </body>
     </html>
   );
